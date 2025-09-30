@@ -57,8 +57,11 @@ end
 function SP.ApplyPrioritySettings()
     ClearAllSynergyPriorityOverrides()
 
-    for k, v in pairs(SP.sVC.priorities) do
-        SetSynergyPriorityOverride(s.ID, s.PRIORITY)
+    for abilityId, priority in pairs(SP.sVC.priorities) do
+        SetSynergyPriorityOverride(abilityId, priority)
+        if SP.debug == 1 then
+            d("[SP]: Setting " .. abilityId .. " to " .. priority)
+        end
     end
 end
 
@@ -80,6 +83,7 @@ function SP.OnAddOnLoaded(_, addonName)
 
     EVENT_MANAGER:RegisterForEvent(SP.name, EVENT_SYNERGY_ABILITY_CHANGED, SP.OnSynergyAbilityChanged)
     EVENT_MANAGER:RegisterForEvent(SP.name, EVENT_PLAYER_ACTIVATED, SP.ApplyPrioritySettings)
+    SP.RegisterLAMPanel()
 end
 
 EVENT_MANAGER:RegisterForEvent(SP.name, EVENT_ADD_ON_LOADED, SP.OnAddOnLoaded)

@@ -169,7 +169,7 @@ SP.data = {
         [ID] = 141971,
         [ICON] = "esoui/art/icons/ability_u23_bloodball_chokeonit.dds",
         [NAME] = "Sanguine Burst",
-        [PRIORITY] = 8, -- Untested
+        [PRIORITY] = 8,
     },
     [26] = {
         [ID] = 88892,
@@ -205,37 +205,6 @@ SP.defaultSpec = {
     [39519] = 6, -- Blood Funnel
     [48085] = 6, -- Charged Lightning
     [85434] = 7, -- Combustion
-}
-
-SP.damageSpec = {
-    [41965] = 5, -- Blood Feast
-    [39519] = 6, -- Blood Funnel
-    [48085] = 9, -- Charged Lightning
-    [85434] = 9, -- Combustion
-    [48052] = 9, -- Blessed Shards
-    [95926] = 9, -- Holy Shards
-    [63512] = 9, -- Healing Combustion
-    [43769] = 9, -- Conduit
-    [22270] = 9, -- Purify
-    [85576] = 9, -- Harvest
-    [39424] = 9, -- Bone Wall
-    [42196] = 9, -- Spinal Surge
-    [39451] = 9, -- Spawn Broodling
-    [41997] = 9, -- Black Widow
-    [42019] = 9, -- Arachnophobia
-    [41840] = 9, -- Radiate
-    [67717] = 9, -- Shackle
-    [48040] = 9, -- Ignite
-    [48938] = 9, -- Gravity Crush
-    [48939] = 9, -- Supernova
-    [37729] = 9, -- Hidden Refresh
-    [25172] = 9, -- Soul Leech
-    [58813] = 9, -- Feeding Frenzy
-    [115567] = 9, -- Grave Robber
-    [118610] = 9, -- Pure Agony
-    [141971] = 9, -- Sanguine Burst
-    [167042] = 9, -- Gryphon's Reprisal
-    [191080] = 9, -- Runebreak
 }
 
 SP.majoSpec = {

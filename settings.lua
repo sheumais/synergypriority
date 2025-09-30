@@ -5,9 +5,9 @@ local LAM = LibAddonMenu2
 
 local panelData = {
     type = "panel",
-    name = SP.nameDisplay,
-    displayName = "|cFFFFFFSynergy|cA2DE9FPriority|r",
-    authors = "TheMrPancake",
+    name = "Synergy Priority",
+    displayName = "|cFFFFFFSynergy|r|cA2DE9FPriority|r",
+    author = "TheMrPancake, Kyzeragon & M0R",
     version = SP.version,
     registerForRefresh = true,
     registerForDefaults = true,
@@ -15,23 +15,20 @@ local panelData = {
 
 local presets = {
     [1] = "Default",
-    [2] = "DPS",
-    [3] = "Full Damage",
-    [4] = "Support",
+    [2] = "Full Damage",
+    [3] = "Support",
 }
 
 local preset_map = {
     [1] = SP.defaultSpec,
-    [2] = SP.damageSpec,
-    [3] = SP.majoSpec,
-    [4] = SP.supportSpec,
+    [2] = SP.majoSpec,
+    [3] = SP.supportSpec,
 }
 
 local preset_tooltips = {
     [1] = "The vanilla experience with three changes.",
-    [2] = "Prioritise all skill and set synergies equally.",
-    [3] = "Prioritise damaging synergies (strongest first) over any healing or sustain synergies. Use with care!",
-    [4] = "Prioritise healing and sustain synergies.",
+    [2] = "Prioritise damaging synergies (strongest first) over healing or sustain synergies.",
+    [3] = "Prioritise healing and sustain synergies.",
 }
 
 local ID = SP.ID
@@ -39,6 +36,42 @@ local ICON = SP.ICON
 local NAME = SP.NAME
 local PRIORITY = SP.PRIORITY
 local ZONES = SP.ZONES
+
+function SP.getFormattedSynergyList()
+    local str = ""
+    local data = (SP.sVA and SP.sVA.data) or SP.data
+
+    local sorted = {}
+    for _, v in pairs(data) do
+        table.insert(sorted, v)
+    end
+
+    table.sort(sorted, function(a, b)
+        return a[ID] < b[ID]
+    end)
+
+    for _, value in ipairs(sorted) do
+        local zones = nil
+        if value[ZONES] ~= nil then 
+            for _, zoneId in pairs(value[ZONES]) do
+                local zoneName = GetZoneNameById(zoneId)
+                if zones == nil then
+                    zones = zoneName
+                else
+                    zones = zones .. ", " .. zoneName
+                end
+            end
+        end
+
+        local synergy = value[ID] .. " - " .. value[NAME] .. " (" .. value[PRIORITY] .. ")"
+        if zones ~= nil then
+            synergy = synergy .. " [" .. zones .. "]"
+        end
+        str = str .. synergy .. "\n"
+    end
+
+    return str
+end
 
 local optionsTable = {
     {
@@ -75,22 +108,8 @@ local optionsTable = {
             },
             {
                 type = "description",
-                text = function() 
-                    local string = "" 
-                    for _, value in pairs(SP.sVA.data) do 
-                        local zones = nil
-                        if value[ZONES] ~= nil then 
-                            for _, value in pairs(value[ZONES]) do
-                                zones = zones .. GetZoneNameById(value) .. ", "
-                            end
-                        end
-                        local synergy = value .. value[ID] .. " - " .. value[NAME] .. "(" .. value[PRIORITY] .. ")"
-                        if zones then synergy = synergy .. "[" .. zones .. "]" end
-                        string = string .. synergy .. "\n"
-                    end
-                    return string 
-                end,
-            }
+                text = SP.getFormattedSynergyList() or "Error loading synergy list",
+            },
         }
     },
     {
@@ -109,13 +128,17 @@ local optionsTable = {
                 tbl[tonumber(k)] = tonumber(v)
             end
             SP.sVC.priorities = tbl
+            SP.ApplyPrioritySettings()
         end,
         maxChars = 3000,
+        width = "full",
+        isMultiline = true,
+        isExtraWide = true,
         default = preset_map[1],
     },
 }
 
 function SP.RegisterLAMPanel()
-    LAM:RegisterAddonPanel(SP.name, panelData)
-    LAM:RegisterOptionControls(SP.name, optionsTable)
+    LAM:RegisterAddonPanel(SP.name.."Settings", panelData)
+    LAM:RegisterOptionControls(SP.name.."Settings", optionsTable)
 end
