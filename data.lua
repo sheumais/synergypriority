@@ -163,7 +163,7 @@ SP.data = {
         [ID] = 58813,
         [ICON] = "esoui/art/icons/ability_werewolf_005_b.dds",
         [NAME] = "Feeding Frenzy",
-        [PRIORITY] = 8, -- Untested
+        [PRIORITY] = 8,
     },
     [25] = {
         [ID] = 141971,

@@ -26,9 +26,9 @@ local preset_map = {
 }
 
 local preset_tooltips = {
-    [1] = "The vanilla experience with three changes.",
-    [2] = "Prioritise damaging synergies (strongest first) over healing or sustain synergies.",
-    [3] = "Prioritise healing and sustain synergies.",
+    [1] = "The vanilla experience with three changes",
+    [2] = "Prioritise damaging synergies (strongest first)",
+    [3] = "Prioritise healing and sustain synergies",
 }
 
 local ID = SP.ID
@@ -37,7 +37,7 @@ local NAME = SP.NAME
 local PRIORITY = SP.PRIORITY
 local ZONES = SP.ZONES
 
-function SP.getFormattedSynergyList()
+function SP.GetFormattedSynergyList()
     local str = ""
     local data = (SP.sVA and SP.sVA.data) or SP.data
 
@@ -108,7 +108,7 @@ local optionsTable = {
             },
             {
                 type = "description",
-                text = SP.getFormattedSynergyList() or "Error loading synergy list",
+                text = SP.GetFormattedSynergyList() or "Error loading synergy list",
             },
         }
     },
@@ -124,7 +124,7 @@ local optionsTable = {
         end,
         setFunc = function(text)
             local tbl = {}
-            for k, v in string.gmatch(text, "%[(%d+)%]%s*=%s*(%d+)") do
+            for k, v in string.gmatch(text, "%[(%d+)%]%s*=%s*(%d+)") do -- does this regex need to change to account for negative or nil priority values?
                 tbl[tonumber(k)] = tonumber(v)
             end
             SP.sVC.priorities = tbl
