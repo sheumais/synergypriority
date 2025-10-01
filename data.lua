@@ -16,7 +16,7 @@ local ZONES = SP.ZONES
 
 SP.data = {
     [0] = {
-        [ID] = 48052,
+        [ID] = 26832, -- this is not 48052, thats the cooldown
         [ICON] = "/esoui/art/icons/ability_templar_sun_strike.dds",
         [NAME] = "Blessed Shards",
         [PRIORITY] = 8,
@@ -63,7 +63,7 @@ SP.data = {
         [NAME] = "Bone Wall",
         [PRIORITY] = 7,
     },
-        [8] = {
+    [8] = {
         [ID] = 42196,
         [ICON] = "/esoui/art/icons/ability_undaunted_005a.dds",
         [NAME] = "Spinal Surge",
@@ -178,10 +178,10 @@ SP.data = {
         [PRIORITY] = 8,
     },
     [27] = {
-        [ID] = 167042,
+        [ID] = 167044, -- slightly wrong id, updated
         [ICON] = "esoui/art/icons/achievement_trial_cr_flavor_3.dds",
         [NAME] = "Gryphon's Reprisal",
-        [PRIORITY] = 9, -- Untested
+        [PRIORITY] = 9,
     },
     [28] = {
         [ID] = 191080,
@@ -195,6 +195,26 @@ SP.data = {
         [NAME] = "Passage",
         [PRIORITY] = 0,
     },
+    [30] = {
+        [ID] = 142712,
+        [ICON] = "/esoui/art/icons/achievement_u26_skyrim_werewolfdevour100.dds",
+        [NAME] = "Heed the Call",
+        [PRIORITY] = 8,
+    },
+    [31] = {
+        [ID] = 241232,
+        [ICON] = "/esoui/art/icons/ability_healer_018.dds",
+        [NAME] = "Convergence Release",
+        [PRIORITY] = 9,
+    },
+    [32] = 
+    {
+        [ID] = 111437,
+        [ICON] = "/esoui/art/icons/ability_warden_018_c.dds",
+        [NAME] = "Shield of Ursus",
+        [PRIORITY] = 7,
+    },
+
 }
 
 -- [SYNERGY_ID] = PRIORITY
@@ -223,7 +243,7 @@ SP.majoSpec = {
     [37729] = 9, -- Hidden Refresh
     [39519] = 9, -- Blood Funnel
     [48085] = 9, -- Charged Lightning
-    [48052] = 9, -- Blessed Shards
+    [26832] = 9, -- Blessed Shards
     [95926] = 9, -- Holy Shards
     [63512] = 9, -- Healing Combustion
     [22270] = 9, -- Purify
@@ -234,7 +254,7 @@ SP.majoSpec = {
     [115567] = 8, -- Grave Robber
     [118610] = 8, -- Pure Agony
     [141971] = 9, -- Sanguine Burst
-    [167042] = 9, -- Gryphon's Reprisal
+    [167044] = 9, -- Gryphon's Reprisal
     [191080] = 7, -- Runebreak
 }
 
@@ -242,7 +262,7 @@ SP.supportSpec = {
     [41965] = 5, -- Blood Feast
     [39519] = 6, -- Blood Funnel
     [48085] = 6, -- Charged Lightning
-    [48052] = 7, -- Blessed Shards
+    [26832] = 7, -- Blessed Shards
     [95926] = 7, -- Holy Shards
     [85434] = 7, -- Combustion
     [63512] = 8, -- Healing Combustion
@@ -265,6 +285,6 @@ SP.supportSpec = {
     [115567] = 9, -- Grave Robber
     [118610] = 9, -- Pure Agony
     [141971] = 9, -- Sanguine Burst
-    [167042] = 9, -- Gryphon's Reprisal
+    [167044] = 9, -- Gryphon's Reprisal
     [191080] = 9, -- Runebreak
 }

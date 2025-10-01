@@ -17,16 +17,16 @@ local apiversion = GetAPIVersion()
 
 function SP.IsNewSynergy(synergyId, zoneId)
     for _, value in pairs(SP.sVA.data) do
-        if value.ID == synergyId then
-            if value.ZONES ~= nil and zoneId ~= nil then
-                table.insert(value.ZONES, zoneId)
+        if value[ID] == synergyId then
+            if value[ZONES] ~= nil and zoneId ~= nil then
+                table.insert(value[ZONES], zoneId)
                 if SP.debug then
-                    d("[SP]: Adding new zone " .. zoneId .. " to synergy " .. value.NAME)
+                    d("[SP]: Adding new zone " .. zoneId .. " to synergy " .. value[NAME])
                 end
-                if #value.ZONES > 3 then
-                    value.ZONES = nil
+                if #value[ZONES] > 3 then
+                    value[ZONES] = nil
                     if SP.debug then
-                        d("[SP]: Removing zone list for synergy " .. value.NAME .. " because it is too generic to support zone identification")
+                        d("[SP]: Removing zone list for synergy " .. value[NAME] .. " because it is too generic to support zone identification")
                     end
                 end
             end
@@ -38,7 +38,7 @@ end
 
 function SP.OnSynergyAbilityChanged()
     local n = GetNumberOfAvailableSynergies()
-    for i in n do
+    for i=1,n do
         local synergyName, icon, _, priority, abilityId, _ = GetSynergyInfoAtIndex(i)
         local zoneId = GetUnitWorldPosition("player")
         if SP.IsNewSynergy(abilityId, zoneId) then
