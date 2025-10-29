@@ -7,7 +7,7 @@ local panelData = {
     type = "panel",
     name = "Synergy Priority",
     displayName = "|cFFFFFFSynergy|r|cA2DE9FPriority|r",
-    author = "TheMrPancake, Kyzeragon & M0R",
+    author = "TheMrPancake, M0R",
     version = SP.version,
     registerForRefresh = true,
     registerForDefaults = true,
@@ -38,11 +38,13 @@ local PRIORITY = SP.PRIORITY
 local ZONES = SP.ZONES
 
 function SP.GetFormattedSynergyList()
+    if not SP.sVA then return nil end
     local str = ""
-    local data = (SP.sVA and SP.sVA.data) or SP.data
+    local combined = {}
+    ZO_CombineNumericallyIndexedTables(combined, SP.data, SP.sVA.data)
 
     local sorted = {}
-    for _, v in pairs(data) do
+    for _, v in pairs(combined) do
         table.insert(sorted, v)
     end
 
@@ -63,7 +65,7 @@ function SP.GetFormattedSynergyList()
             end
         end
 
-        local synergy = value[ID] .. " - " .. value[NAME] .. " (" .. value[PRIORITY] .. ")"
+        local synergy = zo_iconFormat(value[ICON], 16, 16) .. " " .. value[ID] .. " - " .. value[NAME] .. " (" .. value[PRIORITY] .. ")"
         if zones ~= nil then
             synergy = synergy .. " [" .. zones .. "]"
         end
@@ -74,11 +76,6 @@ function SP.GetFormattedSynergyList()
 end
 
 local optionsTable = {
-    {
-        type = "description",
-        title = nil,
-        text = "Synergy priority is a scale from 0-9 where zero is the highest priority",
-    },
     {
         type = "dropdown",
         name = "Default profiles",
@@ -104,11 +101,25 @@ local optionsTable = {
         controls = {
             {
                 type = "description",
-                text = "This addon comes with a list of default player synergies and learns about additional synergies as you explore Tamriel. Below you can find the list of all of the synergies that the addon knows about, in the format `ID - Name (Priority) [Zone, names]`",
+                text = "This addon comes with a list of default player synergies and learns about additional synergies as you explore Tamriel.",
             },
             {
                 type = "description",
-                text = SP.GetFormattedSynergyList() or "Error loading synergy list",
+                title = nil,
+                text = "Synergy priority is a scale from 0-9 where zero is the highest priority. Below you can find the list of all of the synergies that the addon knows about, in the format:\nID - Name (Priority) [Zone, names]",
+            },
+            {
+                type = "button",
+                name = "Reset Known Synergies",
+                tooltip = "This will reset the known synergies to the default and cannot be undone.",
+                isDangerous = true,
+                func = function(value)
+                    SP.ResetKnownSynergies()
+                end,
+            },
+            {
+                type = "description",
+                text = function() return SP.GetFormattedSynergyList() or "Error loading synergy list" end,
             },
         }
     },

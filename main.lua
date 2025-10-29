@@ -13,15 +13,26 @@ local NAME = SP.NAME
 local PRIORITY = SP.PRIORITY
 local ZONES = SP.ZONES
 
-local apiversion = GetAPIVersion()
+local function table_contains(table, element)
+  for _, value in pairs(table) do
+    if value == element then
+      return true
+    end
+  end
+  return false
+end
 
 function SP.IsNewSynergy(synergyId, zoneId)
-    for _, value in pairs(SP.sVA.data) do
+    local combined = {}
+    ZO_CombineNumericallyIndexedTables(combined, SP.data, SP.sVA.data)
+    for _, value in pairs(combined) do
         if value[ID] == synergyId then
             if value[ZONES] ~= nil and zoneId ~= nil then
-                table.insert(value[ZONES], zoneId)
-                if SP.debug then
-                    d("[SP]: Adding new zone " .. zoneId .. " to synergy " .. value[NAME])
+                if not table_contains(value[ZONES], zoneId) then
+                    table.insert(value[ZONES], zoneId)
+                    if SP.debug then
+                        d("[SP]: Adding new zone " .. zoneId .. " to synergy " .. value[NAME])
+                    end
                 end
                 if #value[ZONES] > 3 then
                     value[ZONES] = nil
@@ -49,7 +60,7 @@ function SP.OnSynergyAbilityChanged()
                 [PRIORITY] = priority,
                 [ZONES] = {zoneId}
             })
-            if SP.debug then 
+            if SP.debug then
                 d("[SP]: Found new synergy " .. synergyName .. " with abilityId " .. abilityId .. " and priority " .. priority)
             end
         end
@@ -57,14 +68,10 @@ function SP.OnSynergyAbilityChanged()
 end
 
 function SP.ApplyPrioritySettings()
-    if apiversion >= 101048 then
-        ClearAllSynergyPriorityOverrides()
-    end
+    ClearAllSynergyPriorityOverrides()
 
     for abilityId, priority in pairs(SP.sVC.priorities) do
-        if apiversion >= 101048 then
-            SetSynergyPriorityOverride(abilityId, priority)
-        end
+        SetSynergyPriorityOverride(abilityId, priority)
         if SP.debug == 1 then
             d("[SP]: Setting " .. abilityId .. " to " .. priority)
         end
@@ -77,8 +84,12 @@ SP.defaultCharacterTable = {
 }
 
 SP.defaultGlobalTable = {
-    data = SP.data,
+    data = {},
 }
+
+function SP.ResetKnownSynergies()
+    SP.sVA.data = {}
+end
 
 function SP.OnAddOnLoaded(_, addonName)
     if addonName ~= SP.name then return end
@@ -87,9 +98,7 @@ function SP.OnAddOnLoaded(_, addonName)
     SP.sVA = ZO_SavedVars:NewAccountWide("SynergyPrioritySavedVariables", 1, nil, SP.defaultGlobalTable, GetWorldName())
     SP.sVC = ZO_SavedVars:NewCharacterIdSettings("SynergyPrioritySavedVariables", 1, nil, SP.defaultCharacterTable, GetWorldName())
 
-    if apiversion >= 101048 then
-        EVENT_MANAGER:RegisterForEvent(SP.name, EVENT_SYNERGY_ABILITY_CHANGED, SP.OnSynergyAbilityChanged)
-    end
+    EVENT_MANAGER:RegisterForEvent(SP.name, EVENT_SYNERGY_ABILITY_CHANGED, SP.OnSynergyAbilityChanged)
     EVENT_MANAGER:RegisterForEvent(SP.name, EVENT_PLAYER_ACTIVATED, SP.ApplyPrioritySettings)
     SP.RegisterLAMPanel()
 end

@@ -5,7 +5,7 @@
 ; You can read the full terms at https://account.elderscrollsonline.com/add-on-terms
 
 ## Title: Synergy |cA2DE9FPriority|r
-## Author: TheMrPancake, Kyzeragon, M0R
+## Author: TheMrPancake, M0R
 ## Version: 1.0
 ## APIVersion: 101048
 ## AddOnVersion: 1
@@ -13,6 +13,9 @@
 ## DependsOn: LibAddonMenu-2.0>=38
 ## SavedVariables: SynergyPrioritySavedVariables
 
+; Thank you to Kyzeragon for initial data collection
+; Thank you to Cixa, phandfield and ppflyet for helping with the collection of data
+
 data.lua
-settings.lua
 main.lua
+settings.lua
