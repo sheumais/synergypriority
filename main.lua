@@ -3,7 +3,6 @@ SynergyPriority = SynergyPriority or {}
 local SP = SynergyPriority
 
 SP.name = "SynergyPriority"
-SP.nameDisplay = "Synergy Priority"
 SP.version = "1.0"
 SP.debug = false
 
