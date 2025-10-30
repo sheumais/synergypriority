@@ -6,7 +6,7 @@ local LAM = LibAddonMenu2
 local panelData = {
     type = "panel",
     name = "Synergy Priority",
-    displayName = "|cFFFFFFSynergy|r|cA2DE9FPriority|r",
+    displayName = "|cFFFFFFSynergy|r|c9ACD32Priority|r",
     author = "TheMrPancake, M0R",
     version = SP.version,
     registerForRefresh = true,
@@ -78,9 +78,9 @@ end
 local optionsTable = {
     {
         type = "dropdown",
-        name = "Default profiles",
+        name = "Priority profiles",
         tooltip = "Select from a list of synergy priority presets based on role",
-        warning = "Overrides existing choices. Select with care",
+        warning = "Overrides customised priorities. Select with care",
         choices = presets,
         default = presets[1],
         choicesTooltips = preset_tooltips,
