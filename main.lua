@@ -3,7 +3,7 @@ SynergyPriority = SynergyPriority or {}
 local SP = SynergyPriority
 
 SP.name = "SynergyPriority"
-SP.version = "1.0"
+SP.version = "1.1"
 SP.debug = false
 
 local ID = SP.ID
@@ -79,16 +79,18 @@ end
 
 SP.defaultCharacterTable = {
     lastPresetChoice = "Default",
-    priorities = SP.defaultSpec
+    priorities = {},
 }
 
 SP.defaultGlobalTable = {
     data = {},
+    customProfiles = {
+        ["Default"] = SP.builtinProfiles["Default"],
+        ["Full Damage"] = SP.builtinProfiles["Full Damage"],
+        ["Support"] = SP.builtinProfiles["Support"],
+    },
+    showAllHardcodedSynergies = false,
 }
-
-function SP.ResetKnownSynergies()
-    SP.sVA.data = {}
-end
 
 function SP.OnAddOnLoaded(_, addonName)
     if addonName ~= SP.name then return end

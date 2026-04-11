@@ -7,7 +7,7 @@
 ## Title: Synergy |c9ACD32Priority|r
 ## Description: Customise synergy priorities to your liking
 ## Author: TheMrPancake, M0R
-## Version: 1.0
+## Version: 2
 ## APIVersion: 101048
 ## AddOnVersion: 1
 ## IsLibrary: false
@@ -19,4 +19,5 @@
 
 data.lua
 main.lua
+profiles.lua
 settings.lua
